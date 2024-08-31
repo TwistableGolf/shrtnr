@@ -1,16 +1,19 @@
+import client from "../../../../lib/mongodb";
+
 export async function POST(request: Request) {
     const { url } = await request.json();
-    const response = await fetch("https://api.shrtco.de/v2/shorten", {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ url }),
-    });
-    const data = await response.json();
-    return new Response(JSON.stringify(data), {
-        headers: {
-        "Content-Type": "application/json",
-        },
-    });
+    if (!url) {
+        return new Response("Missing URL", { status: 400 });
+    }
+
+    const id = Math.random().toString(36).slice(2);
+
+    await client
+        .db("shortener")
+        .collection("links")
+        .insertOne({ id, url });
+
+    const repsonse = {id: id};
+    return new Response(JSON.stringify(repsonse));
 }
+
