@@ -28,6 +28,11 @@ export default function Home() {
     setUrl(`${window.location.origin}/${data.id}`)
   }
 
+  async function copyUrl() {
+    await navigator.clipboard.writeText(url);
+    alert('Copied to clipboard');
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center  p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between text-sm lg:flex">
@@ -38,16 +43,21 @@ export default function Home() {
           <input
             type="text"
             name="url"
-            className="w-96 p-4 text-lg text-black border border-gray-200 rounded-lg"
+            className="w-96 p-2 text-lg text-black border border-gray-200 rounded-lg"
             placeholder="Link to shorten"
           />
-          <button className="p-4 text-lg bg-blue-500 text-black rounded-lg">
+          <button className="p-2 text-lg hover:bg-white hover:text-black transition-all rounded-md outline outline-white outline-2">
             SHRTN
           </button>
         </form>
         {url && (
           <div className="flex justify-center">
-            Your url is: {url}
+            <p className="p-1">Your url is: {url}</p>
+            <button
+              className="p-1 ml-2 hover:bg-white hover:text-black transition-all rounded-md outline outline-white outline-2"
+              onClick={copyUrl}>
+              <span className="material-symbols-outlined flex justify-center">content_copy</span>
+            </button>
           </div>
         )}
       </div>
