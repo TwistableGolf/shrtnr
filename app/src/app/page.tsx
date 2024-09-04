@@ -26,7 +26,7 @@ export default function Home() {
     // Handle response if necessary
     const data = await response.json()
     const fullUrl = `${window.location.origin}/${data.id}`
-    const shortened = fullUrl.replace('http://', '').replace('https://', '').replace('www.', '');
+    const shortened = fullUrl.replace('www.', '');
     setUrl(shortened);
   }
 
